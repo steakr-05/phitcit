@@ -348,11 +348,12 @@
         }
 
         .resume-modal-content .resume-image-wrapper img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
             border-radius: 12px;
             border: 1px solid rgba(100, 150, 255, 0.02);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            display: block;
         }
 
         .resume-modal-content .resume-image-wrapper .placeholder-text {
@@ -1372,16 +1373,16 @@
                     <i class="fas fa-times"></i>
                 </button>
                 <div class="resume-image-wrapper">
-                    <img src="images/phitcit.png" alt="Resume" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                    <div class="placeholder-text" style="display:none;">
+                    <img src="images/phitcit.png" alt="Resume" id="resumeImage" />
+                    <div class="placeholder-text" id="placeholderText">
                         <i class="fas fa-file-image"></i>
                         <p>Resume image not found.</p>
                         <p style="font-size:0.8rem; margin-top:0.5rem;">
-                            Replace the <code>src</code> in the <code>&lt;img&gt;</code> tag above<br />
-                            with your actual resume image path.
+                            Make sure your resume image is in the <code>images/</code> folder<br />
+                            with the filename <code>phitcit.png</code>
                         </p>
                         <p style="font-size:0.7rem; color:rgba(255,255,255,0.15); margin-top:0.8rem;">
-                            Example: <code>src="images/resume.png"</code>
+                            Path: <code>images/phitcit.png</code>
                         </p>
                     </div>
                 </div>
@@ -1663,6 +1664,18 @@
             const resumeBtn = document.getElementById('resumeBtn');
             const resumeModal = document.getElementById('resumeModal');
             const closeModal = document.getElementById('closeModal');
+            const resumeImage = document.getElementById('resumeImage');
+            const placeholderText = document.getElementById('placeholderText');
+
+            // Hide placeholder by default, show image
+            placeholderText.style.display = 'none';
+            resumeImage.style.display = 'block';
+
+            // If image fails to load, show placeholder
+            resumeImage.addEventListener('error', function() {
+                this.style.display = 'none';
+                placeholderText.style.display = 'block';
+            });
 
             function openResume() {
                 resumeModal.classList.add('active');
